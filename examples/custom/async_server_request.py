@@ -11,7 +11,7 @@ async def main(n: int = 100):
     headers = {'Authorization': 'Bearer None'}
 
     async with aiohttp.ClientSession() as session:
-        with open('_scratch/prompts.txt', 'r') as file:
+        with open('examples/custom/prompts.txt', 'r') as file:
             prompts = file.readlines()
 
         tasks = []
@@ -23,8 +23,8 @@ async def main(n: int = 100):
                 'prompt': prompt,
                 'temperature': 0.0,
                 'best_of': 1,
-                'max_tokens': random.randint(100, 200),
-                # 'stream': True
+                'max_tokens': random.randint(100, 200), # if max_token is the same
+                'stream': True
             }
             tasks.append(make_request(session, api_url, payload, headers))
         responses = await asyncio.gather(*tasks)
